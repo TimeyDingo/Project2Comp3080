@@ -19,7 +19,7 @@ int totalReads = 0;
 int totalWrites = 0;
 
 sem_t mutex; // for read count?
-sem_t countLock;
+sem_t countLock; 
 int ReadCount = 0;
 //! The global area must include semaphore declarations and
 //! declarations of any state variables (reader counts,
