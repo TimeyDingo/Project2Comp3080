@@ -18,6 +18,7 @@ int keepgoing = 1;
 int totalReads = 0;
 int totalWrites = 0;
 
+
 sem_t mutex; // for read count?
 sem_t countLock; 
 sem_t rw_mutex; // controls access to shared resource
@@ -44,8 +45,8 @@ void *readers(void *args)
         threadSleep(rOOCrange, rOOCbase);
 
         sem_wait(&mutex);
-        read_count++;
-        if (read_count == 1){
+        ReadCount++;
+        if (ReadCount == 1){
             sem_wait(&rw_mutex);
         } 
         totalReads++;
@@ -56,8 +57,8 @@ void *readers(void *args)
         printf("Reader %d finishing reading\n", id);
         
         sem_wait(&mutex);
-        read_count--;
-        if (read_count == 0){
+        ReadCount--;
+        if (ReadCount == 0){
             sem_post(&rw_mutex);
         }
         sem_post(&mutex);
