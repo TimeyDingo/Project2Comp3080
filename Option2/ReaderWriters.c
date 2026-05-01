@@ -124,6 +124,9 @@ int main(int argc, char **argv)
     int readersID[numRThreads];
     int writersID[numWThreads];
     //! Add code to initialize the binary semaphores used by the readers and writers.
+    sem_init(&mutex, 0, 1);
+    sem_init(&countLock, 0, 1);
+    sem_init(&rw_mutex, 0, 1);
     //! Add a for loop to create numRThread reader threads.
     for (int i = 0; i < numRThreads; i++) {
         readersID[i] = i;
