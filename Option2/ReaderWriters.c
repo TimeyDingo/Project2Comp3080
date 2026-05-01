@@ -140,7 +140,7 @@ int main(int argc, char **argv)
     //! the Enter key. Then, keepgoing will be set to 0, which will cause
     //! the reader and writer threads to quit.
     char buf[256];
-    scanf("%s", &buf);
+    scanf("%s", buf);
     keepgoing = 0;
     
     //! Add two for loops using pthread_join in order to wait for the reader
