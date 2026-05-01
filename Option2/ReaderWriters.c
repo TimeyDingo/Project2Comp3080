@@ -40,20 +40,26 @@ void *readers(void *args)
     threadSleep(rOOCrange, rOOCbase);
     while (keepgoing)
     {
-        //! Add code for each reader to enter the
-        //! reading area.
-        //! The totalReads variable must be
-        //! incremented just before entering the
-        //! reader area. However, you must use mutual exclusion
-        //! on the increment operation to prevent race conditions
-        //! for the increment.
+        threadSleep(rOOCrange, rOOCbase);
+
+        sem_wait(&mutex);
+        read_count++;
+        if (read_count == 1){
+            sem_wait(&rw_mutex);
+        } 
         totalReads++;
+        sem_post(&mutex);
+        
         printf("Reader %d starting to read\n", id);
         threadSleep(rICrange, rICbase);
         printf("Reader %d finishing reading\n", id);
-        //! Add code for each reader to leave the
-        //! reading area.
-        threadSleep(rOOCrange, rOOCbase);
+        
+        sem_wait(&mutex);
+        read_count--;
+        if (read_count == 0){
+            sem_post(&rw_mutex);
+        }
+        sem_post(&mutex);
     }
     printf("Reader %d quitting\n", id);
 }
