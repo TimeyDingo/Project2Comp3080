@@ -126,11 +126,13 @@ int main(int argc, char **argv)
     //! Add code to initialize the binary semaphores used by the readers and writers.
     //! Add a for loop to create numRThread reader threads.
     for (int i = 0; i < numRThreads; i++) {
-        pthread_create(*(readerArr[i]), readers);
+        readersID[i] = i;
+        pthread_create(&readerArr[i], NULL, readers, &readersID[i]);
     }
     //! Add a for loop to create numWThread writer threads.
     for (int i = 0; i < numWThreads; i++) {
-        pthread_create(*(writerArr[i]), writers);
+        writersID[i] = i;
+        pthread_create(&writerArr[i], NULL, writers, &writersID[i]);
     }
     //! These statements wait for the user to type a character and press
     //! the Enter key. Then, keepgoing will be set to 0, which will cause
@@ -141,10 +143,10 @@ int main(int argc, char **argv)
     
     //! Add two for loops using pthread_join in order to wait for the reader
     for (int i = 0; i < numRThreads; i++) {
-        pthread_join(readerArr[i]);
+        pthread_join(readerArr[i],NULL);
     }
     for (int i = 0; i < numWThreads; i++) {
-        pthread_join(writerArr[i]);
+        pthread_join(writerArr[i],NULL);
     }
     //! and writer threads to quit.
     printf("Total number of reads: %d\nTotal number of writes: %d\n", totalReads, totalWrites);
