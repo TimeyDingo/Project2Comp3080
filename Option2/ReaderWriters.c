@@ -73,12 +73,16 @@ void *writers(void *args)
     {
         //! Add code for each writer to enter
         //! the writing area.
+        sem_wait(&rw_mutex);
+        sem_wait(&countLock);
         totalWrites++;
+        sem_post(&countLock);   
         printf("Writer %d starting to write\n", id);
         threadSleep(wICrange, wICbase);
         printf("Writer %d finishing writing\n", id);
-        //! Add code for each writer to leave
-        //! the writing area.
+
+        sem_post(&rw_mutex); //! Add code for each writer to leave //! the writing area.
+        
         threadSleep(wOOCrange, wOOCbase);
     }
     printf("Writer %d quitting\n", id);
