@@ -19,7 +19,8 @@ int totalReads = 0;
 int totalWrites = 0;
 
 sem_t mutex; // for read count?
-sem_t countLock;
+sem_t countLock; 
+sem_t rw_mutex; // controls access to shared resource
 int ReadCount = 0;
 //! The global area must include semaphore declarations and
 //! declarations of any state variables (reader counts,
@@ -86,6 +87,8 @@ void *writers(void *args)
 int main(int argc, char **argv)
 {
     sem_init(&mutex, 0, 1);
+    sem_init(&rw_mutex, 0, 1);
+    sem_init(&countLock, 0, 1);
     int numRThreads = 0;
     int numWThreads = 0;
     if (argc == 11)
@@ -108,11 +111,21 @@ int main(int argc, char **argv)
     }
     //! Add declarations for pthread arrays, one for reader threads and
     //! one for writer threads.
+    pthread_t readerArr[numRThread];
+    pthread_t writerArr[numWThread];
     //! Add declarations for arrays for reader and writer thread identities. As in the
     //! dining philosopher problem, arrays of int are used.
+    int readersID[numRThread];
+    int writersID[numWThread];
     //! Add code to initialize the binary semaphores used by the readers and writers.
     //! Add a for loop to create numRThread reader threads.
+    for (int i = 0; i < numRThreads; i++) {
+        pthread_create(*(readerArr[i]), readers);
+    }
     //! Add a for loop to create numWThread writer threads.
+    for (int i = 0; i < numWThreads; i++) {
+        pthread_create(*(writerArr[i]), writers);
+    }
     //! These statements wait for the user to type a character and press
     //! the Enter key. Then, keepgoing will be set to 0, which will cause
     //! the reader and writer threads to quit.
@@ -121,6 +134,12 @@ int main(int argc, char **argv)
     keepgoing = 0;
     
     //! Add two for loops using pthread_join in order to wait for the reader
+    for (int i = 0; i < numRThreads; i++) {
+        pthread_join(readerArr[i]);
+    }
+    for (int i = 0; i < numWThreads; i++) {
+        pthread_join(writerArr[i]);
+    }
     //! and writer threads to quit.
     printf("Total number of reads: %d\nTotal number of writes: %d\n",
            totalReads, totalWrites);
