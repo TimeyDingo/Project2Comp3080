@@ -20,6 +20,7 @@ int totalWrites = 0;
 
 sem_t mutex; // for read count?
 sem_t countLock; 
+sem_t rw_mutex; // controls access to shared resource
 int ReadCount = 0;
 //! The global area must include semaphore declarations and
 //! declarations of any state variables (reader counts,
@@ -80,6 +81,8 @@ void *writers(void *args)
 int main(int argc, char **argv)
 {
     sem_init(&mutex, 0, 1);
+    sem_init(&rw_mutex, 0, 1);
+    sem_init(&countLock, 0, 1);
     int numRThreads = 0;
     int numWThreads = 0;
     if (argc == 11)
