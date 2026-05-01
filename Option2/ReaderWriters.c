@@ -65,6 +65,7 @@ void *readers(void *args)
         sem_post(&mutex);
     }
     printf("Reader %d quitting\n", id);
+    return NULL;
 }
 
 void *writers(void *args)
@@ -88,13 +89,11 @@ void *writers(void *args)
         threadSleep(wOOCrange, wOOCbase);
     }
     printf("Writer %d quitting\n", id);
+    return NULL;
 }
 
 int main(int argc, char **argv)
 {
-    sem_init(&mutex, 0, 1);
-    sem_init(&rw_mutex, 0, 1);
-    sem_init(&countLock, 0, 1);
     int numRThreads = 0;
     int numWThreads = 0;
     if (argc == 11)
