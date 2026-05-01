@@ -1,3 +1,4 @@
+//Benjamin Evangelista, Wes Cole, Kelvin Kee, Riley Stevens
 Writer starvation
 
 Writer 1 finishing writing
@@ -5,6 +6,29 @@ Writer 1 quitting
 Total number of reads: 46472
 Total number of writes: 2
 
-timey@Benslaptop:~/3080/proj2notcooked/Option2$ ./ReaderWriters 1000000 1000000 1000000 1000000 1000000 1000000 1000000 1000000 3 2
+./ReaderWriters 1000000 1000000 1000000 1000000 1000000 1000000 1000000 1000000 3 2
 
 ReaderStarvation
+
+./ReaderWriters 100000 100000 500000000 500000000 500000000 500000000 100000 100000 2 10
+Total number of reads: 2
+Total number of writes: 20
+
+
+
+
+The program is run by typing
+./ReaderWriters ricr ricb roocr roocb wicr wicb woocr woocb nr nw
+where
+• ricr is the range parameter for controlling how long readers sleep inside their critical sections
+• ricb is the base number of nanoseconds a reader will sleep inside their critical sections
+• roocr is the range parameter for controlling how long readers sleep outside their critical
+sections
+• roocb is the base number of nanoseconds a reader will sleep outside their critical sections
+• wicr is the range parameter for controlling how long writer s sleep inside their critical sections
+• wicb is the base number of nanoseconds a writer will sleep inside their critical sections
+• woocr is the range parameter for controlling how long writer s sleep outside their critical
+sections
+• woocb is the base number of nanoseconds a writer will sleep outside their critical sections
+• nr is the number of reader threads to create
+• nw is the number of writer threads to create
