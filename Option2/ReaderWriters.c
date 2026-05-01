@@ -42,7 +42,6 @@ void *readers(void *args)
     threadSleep(rOOCrange, rOOCbase);
     while (keepgoing)
     {
-        threadSleep(rOOCrange, rOOCbase);
 
         sem_wait(&mutex);
         ReadCount++;
