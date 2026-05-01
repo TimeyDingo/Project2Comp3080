@@ -1,0 +1,10 @@
+Writer starvation
+
+Writer 1 finishing writing
+Writer 1 quitting
+Total number of reads: 46472
+Total number of writes: 2
+
+timey@Benslaptop:~/3080/proj2notcooked/Option2$ ./ReaderWriters 1000000 1000000 1000000 1000000 1000000 1000000 1000000 1000000 3 2
+
+ReaderStarvation
